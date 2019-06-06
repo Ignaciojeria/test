@@ -16,6 +16,7 @@ public class Door {
     private Game game;
 
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private Gift gift;
 
     public Door() {

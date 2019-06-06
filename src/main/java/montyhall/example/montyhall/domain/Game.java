@@ -1,5 +1,7 @@
 package montyhall.example.montyhall.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity

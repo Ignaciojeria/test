@@ -7,7 +7,9 @@ import montyhall.example.montyhall.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GameService {
@@ -50,6 +52,13 @@ public class GameService {
         if (game.getOpportunities() == 0) {
             throw new RuntimeException("you do not have more opportunities");
         }
+    }
+
+    public static void chooseDoorAfterOpportunityWasGivenGuardClause(Game game) {
+        if (game.getChoise() == null)
+            throw new RuntimeException("¿what is you first choise?");
+        if (game.getChoise().name().equals(Choise.FIRST_CHOISE.name()))
+            throw new RuntimeException("select a first choise");
     }
 
 }
