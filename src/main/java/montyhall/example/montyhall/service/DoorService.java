@@ -88,7 +88,7 @@ public class DoorService {
 
 
 
-    public Map<String, Object> findAllByGameAndShowResulset(Game game) {
+    public List<Object> findAllByGameAndShowResulset(Game game) {
         List<Map<String, Object>> doorsMap = new ArrayList<>();
 
         doorRepository.findAllByGame(game).forEach(
@@ -104,7 +104,8 @@ public class DoorService {
 
         output.put("game", game);
         output.put("doors", doorsMap);
-        return output;
+
+        return output.values().stream().collect(Collectors.toList());
     }
 
 

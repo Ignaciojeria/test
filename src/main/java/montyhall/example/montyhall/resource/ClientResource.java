@@ -22,6 +22,8 @@ public class ClientResource {
     @Autowired
     private GameService gameService;
 
+
+
     @PostMapping("/createNewGame")
     public Map<String, Object> createNewGame() {
         return doorService.createGameDoors(gameService.createNewGame(new Game()));
@@ -35,7 +37,7 @@ public class ClientResource {
     }
 
     @PostMapping("/chooseDoorAfterOpportunityWasGiven")
-    public Object chooseDoorAfterOpportunityWasGiven(@RequestBody ChooseDoorRequest chooseDoorRequest) {
+    public List<Object> chooseDoorAfterOpportunityWasGiven(@RequestBody ChooseDoorRequest chooseDoorRequest) {
         Game game = gameService.chooseDoor(doorService.findById(chooseDoorRequest.id));
         GameService.chooseDoorAfterOpportunityWasGivenGuardClause(game);
         return doorService.findAllByGameAndShowResulset(game);
