@@ -9,9 +9,9 @@ https://www.youtube.com/watch?v=w3cgpEF30uY&feature=youtu.be
 
 - Ejecutar comando : $mvn clean package
 
-- Ejecutar comando : java -Dserver.port=${appPort} -jar  .../raizDelProyecto/montyhall/target/montyhall-0.0.1-SNAPSHOT.jar
+- Ejecutar comando : $java -Dserver.port=${appPort} -jar  .../raizDelProyecto/montyhall/target/montyhall-0.0.1-SNAPSHOT.jar
 
-- Escribir en el navegador (HTTP GET) : http:localhost:8080/
+- Escribir en el navegador (HTTP GET) : http:localhost:{appPort}/
 
 # Detalles a nivel de frond end :
 
