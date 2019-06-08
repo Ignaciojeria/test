@@ -11,7 +11,7 @@ https://www.youtube.com/watch?v=w3cgpEF30uY&feature=youtu.be
 
 - Ejecutar comando : $java -Dserver.port=${appPort} -jar  .../raizDelProyecto/montyhall/target/montyhall-0.0.1-SNAPSHOT.jar
 
-- Escribir en el navegador (HTTP GET) : http:localhost:{appPort}/
+- Escribir en el navegador (HTTP GET) : http://localhost:{appPort}
 
 # Detalles a nivel de frond end :
 
