@@ -3,10 +3,12 @@ package montyhall.example.montyhall.service;
 import montyhall.example.montyhall.domain.Choise;
 import montyhall.example.montyhall.domain.Door;
 import montyhall.example.montyhall.domain.Game;
+import montyhall.example.montyhall.domain.Gift;
 import montyhall.example.montyhall.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +19,26 @@ public class GameService {
     @Autowired
     private GameRepository gameRepository;
 
-    public List<Game> findAll() {
-        return gameRepository.findAll();
+    public List<String> getScore() {
+
+        List<Game> gameList = gameRepository.findAll();
+
+        List<String> opciones = new ArrayList<>();
+
+        long mantienesOpcionYPierdes = gameList.stream().filter(item -> item.getChoise() == Choise.KEEP_CHOISE && item.getDoor().getGift() == Gift.GOAT).count();
+
+        long mantienesOpcionYGanas = gameList.stream().filter(item -> item.getChoise() == Choise.KEEP_CHOISE && item.getDoor().getGift() == Gift.CAR).count();
+
+        long cambiasOpcionYPierdes = gameList.stream().filter(item -> item.getChoise() == Choise.CHANGE_CHOISE && item.getDoor().getGift() == Gift.GOAT).count();
+
+        long cambiasOpcionYGanas = gameList.stream().filter(item -> item.getChoise() == Choise.CHANGE_CHOISE && item.getDoor().getGift() == Gift.CAR).count();
+
+        opciones.add("veces que mantienes opcion inicial y te ganas una cabra :".concat(mantienesOpcionYPierdes + ""));
+        opciones.add("veces que mantienes opcion inicial y te ganas un auto :".concat(mantienesOpcionYGanas + ""));
+        opciones.add("veces que cambias  la opcion inicial y te ganas una cabra :".concat(cambiasOpcionYPierdes + ""));
+        opciones.add("veces que cambias  la opcion inicial y te ganas un auto :".concat(cambiasOpcionYGanas + ""));
+
+        return opciones;
     }
 
     public Game createNewGame(Game game) {
@@ -31,14 +51,15 @@ public class GameService {
         Game game = gameRepository.findById(door.getGame().getId()).get();
         opportunitiesGuardClause(game);
 
-        if (game.getOpportunities() == 2)
+        if (game.getOpportunities() == 2) {
             game.setChoise(Choise.FIRST_CHOISE);
-        else if (game.getOpportunities() == 1 && door.getId().longValue() == game.getDoor().getId().longValue())
+        } else if (game.getOpportunities() == 1 && door.getId().longValue() == game.getDoor().getId().longValue()) {
             game.setChoise(Choise.KEEP_CHOISE);
-        else if (game.getOpportunities() == 1 && door.getGame().getId().longValue() == game.getId().longValue() && door.getGame().getId().longValue() != game.getDoor().getId().longValue())
+        } else if (game.getOpportunities() == 1 && door.getGame().getId().longValue() == game.getId().longValue() && door.getGame().getId().longValue() != game.getDoor().getId().longValue()) {
             game.setChoise(Choise.CHANGE_CHOISE);
-        else
+        } else {
             throw new RuntimeException("invalid option!");
+        }
 
         int opportunities = game.getOpportunities() - 1;
         game.setOpportunities(opportunities);

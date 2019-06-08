@@ -18,9 +18,9 @@ public class GameResource {
     @Autowired
     private GameService gameService;
 
-    @GetMapping("game/findAll")
-    public List<Game> findAll() {
-        return gameService.findAll();
+    @GetMapping("game/getScore")
+    public List<String> getScore() {
+        return gameService.getScore();
     }
 
 
