@@ -55,7 +55,7 @@ public class DoorService {
         return doorRepository.findById(id).get();
     }
 
-    public Map<String, Object> findAllByGameAndShowGoatOfOneOfTheDoors(Game game) {
+    public List<Object> findAllByGameAndShowGoatOfOneOfTheDoors(Game game) {
 
         if (!game.getChoise().name().equals(Choise.FIRST_CHOISE.name()))
             throw new RuntimeException("¿what is you first choise?");
@@ -66,7 +66,9 @@ public class DoorService {
 
         Map<String, Object> output = new HashMap<>();
 
-        output.put("selected", game.getDoor().getId());
+        Map<String, Long> selected = new HashMap<>();
+        selected.put("id", game.getDoor().getId());
+        output.put("selected", selected);
 
         for (int i = 0; i < doorList.size(); i++) {
             if (doorList.get(i).getGift().name().equals(Gift.GOAT.name())) {
@@ -80,8 +82,11 @@ public class DoorService {
         }
         output.put("other_choise", doorList.get(0));
 
-        return output;
+
+        return output.values().stream().collect(Collectors.toList());
     }
+
+
 
     public Map<String, Object> findAllByGameAndShowResulset(Game game) {
         List<Map<String, Object>> doorsMap = new ArrayList<>();

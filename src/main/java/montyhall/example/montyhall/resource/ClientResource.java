@@ -22,19 +22,19 @@ public class ClientResource {
     @Autowired
     private GameService gameService;
 
-    @PostMapping("/play")
+    @PostMapping("/createNewGame")
     public Map<String, Object> createNewGame() {
         return doorService.createGameDoors(gameService.createNewGame(new Game()));
     }
 
-    @PostMapping("/firstChoise")
-    public Map<String, Object> chooseDoorAndGiveOpportunity(@RequestBody ChooseDoorRequest chooseDoorRequest) {
+    @PostMapping("/chooseDoorAndGiveOpportunity")
+    public List<Object> chooseDoorAndGiveOpportunity(@RequestBody ChooseDoorRequest chooseDoorRequest) {
         Game game = gameService.chooseDoor(doorService.findById(chooseDoorRequest.id));
-        Map<String, Object> output = doorService.findAllByGameAndShowGoatOfOneOfTheDoors(game);
+        List<Object> output = doorService.findAllByGameAndShowGoatOfOneOfTheDoors(game);
         return output;
     }
 
-    @PostMapping("/finalChoise")
+    @PostMapping("/chooseDoorAfterOpportunityWasGiven")
     public Object chooseDoorAfterOpportunityWasGiven(@RequestBody ChooseDoorRequest chooseDoorRequest) {
         Game game = gameService.chooseDoor(doorService.findById(chooseDoorRequest.id));
         GameService.chooseDoorAfterOpportunityWasGivenGuardClause(game);
