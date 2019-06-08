@@ -15,6 +15,6 @@ https://www.youtube.com/watch?v=w3cgpEF30uY&feature=youtu.be
 
 # Detalles a nivel de frond end :
 
-- se utilizó angular (una bazuca para matar a una mosca. Podría ser solo javascript y html).
+- se utilizó angular (una bazuca para matar a una mosca. Podría ser sólo javascript y html).
 - no se hace uso de frameworks css.
 - repositorio del código fuente del front-end : 
