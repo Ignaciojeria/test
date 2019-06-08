@@ -17,4 +17,4 @@ https://www.youtube.com/watch?v=w3cgpEF30uY&feature=youtu.be
 
 - se utilizó angular (una bazuca para matar a una mosca. Podría ser sólo javascript y html).
 - no se hace uso de frameworks css.
-- repositorio del código fuente del front-end : 
+- repositorio del código fuente del front-end : https://github.com/Ignaciojeria/frontend-test
