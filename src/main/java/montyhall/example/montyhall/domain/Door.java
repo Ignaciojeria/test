@@ -1,10 +1,12 @@
 package montyhall.example.montyhall.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Door {
 
     @Id
@@ -16,7 +18,6 @@ public class Door {
     private Game game;
 
     @Enumerated(EnumType.STRING)
-    @JsonIgnore
     private Gift gift;
 
     public Door() {

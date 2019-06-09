@@ -6,6 +6,9 @@ import montyhall.example.montyhall.domain.Game;
 import montyhall.example.montyhall.domain.Gift;
 import montyhall.example.montyhall.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,9 +22,12 @@ public class GameService {
     @Autowired
     private GameRepository gameRepository;
 
+    @Autowired
+    private DoorService doorService;
+
     public List<String> getScore() {
 
-        List<Game> gameList = gameRepository.findAll();
+        List<Game> gameList = gameRepository.findAllByDoorIsNotNullAndOpportunitiesEquals(0);
 
         List<String> opciones = new ArrayList<>();
 
@@ -40,6 +46,26 @@ public class GameService {
 
         return opciones;
     }
+
+    public List<Map<String, Object>> findAllAndSetGameDoors(int pageRequest) {
+
+
+        Pageable pageable = PageRequest.of(pageRequest, 10);
+
+        Page<Game> page = gameRepository.findAllByDoorIsNotNullAndOpportunitiesEquals(0, pageable);
+
+        List<Map<String, Object>> outputList = new ArrayList<>();
+
+        page.forEach(item -> {
+            Map<String, Object> output = new HashMap<>();
+            output.put("GAME", item);
+            output.put("GAME_DOORS", doorService.findAllByGame(item));
+            outputList.add(output);
+        });
+
+        return outputList;
+    }
+
 
     public Game createNewGame(Game game) {
         game.setOpportunities(2);
@@ -80,6 +106,11 @@ public class GameService {
             throw new RuntimeException("¿what is you first choise?");
         if (game.getChoise().name().equals(Choise.FIRST_CHOISE.name()))
             throw new RuntimeException("select a first choise");
+    }
+
+    public int countByDoorIsNotNullAndOpportunitiesEquals() {
+        int count = this.gameRepository.countByDoorIsNotNullAndOpportunitiesEquals(0);
+        return (int) Math.round(((count / 10) + 0.5));
     }
 
 }

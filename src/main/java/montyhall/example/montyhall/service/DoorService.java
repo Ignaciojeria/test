@@ -1,13 +1,11 @@
 package montyhall.example.montyhall.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import montyhall.example.montyhall.domain.Choise;
 import montyhall.example.montyhall.domain.Door;
 import montyhall.example.montyhall.domain.Game;
 import montyhall.example.montyhall.domain.Gift;
 import montyhall.example.montyhall.repository.DoorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -46,6 +44,11 @@ public class DoorService {
         Map<String, Object> output = new HashMap<>();
 
         output.put("gameId", game.getId());
+
+        doorList.forEach(item -> {
+            item.setGift(null);
+        });
+
         output.put("doors", doorList);
 
         return output;
@@ -61,6 +64,7 @@ public class DoorService {
             throw new RuntimeException("¿what is you first choise?");
 
         List<Door> doorList = doorRepository.findAllByGame(game);
+
 
         doorList = doorList.stream().filter(item -> item.getId() != item.getGame().getDoor().getId()).collect(Collectors.toList());
 
@@ -80,12 +84,16 @@ public class DoorService {
                 break;
             }
         }
+
+        doorList.forEach(item -> {
+            item.setGift(null);
+        });
+
         output.put("other_choise", doorList.get(0));
 
 
         return output.values().stream().collect(Collectors.toList());
     }
-
 
 
     public List<Object> findAllByGameAndShowResulset(Game game) {
@@ -106,6 +114,10 @@ public class DoorService {
         output.put("doors", doorsMap);
 
         return output.values().stream().collect(Collectors.toList());
+    }
+
+    List<Door> findAllByGame(Game game) {
+        return doorRepository.findAllByGame(game);
     }
 
 
